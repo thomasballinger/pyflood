@@ -3,7 +3,6 @@ import socket
 import select
 import time
 from collections import namedtuple
-from bitarray import bitarray
 
 
 select_response = namedtuple('select_response',
@@ -38,23 +37,21 @@ class Reactor(object):
     def event_loop(self):
         while 1:
             doable_lists = select_response(*select.select(self.select_list,
-                                                          self.select_list,
-                                                          self.select_list,
+                                                          [],
+                                                          [],
                                                           1))
-            if not doable_lists.readable:
-                time.sleep(1)
 
-            for i in doable_lists.readable:  # Doesn't require if test
-                if i == self.sock:
+            for s in doable_lists.readable:  # Doesn't require if test
+                if s == self.sock:
                     # TODO -- expand this into creating new peers
                     newsocket, addr = self.sock.accept()
                     self.select_list.append(newsocket)
                 else:
-                    i.read()
+                    s.read()
 
-            wclos = i.write
+            wclos = s.write
             self.subscribed['write'].append(wclos)
-            cclos = i.cleanup
+            cclos = s.cleanup
             self.subscribed['cleanup'].append(cclos)
 
             self.trigger('logic')
