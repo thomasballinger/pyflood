@@ -12,7 +12,7 @@ from switchboard import switchboard
 class torrent(object):
 
     def __init__(self, torrent_path, port=55308):
-        torrent_dict = tparser.bdecode(torrent_path)
+        torrent_dict = tparser.bdecode_file(torrent_path)
         self.torrent_dict = torrent_dict
         self.peer_dict = {}
         self.peer_ips = []
@@ -86,7 +86,7 @@ class torrent(object):
                                   params=payload)
 
         # Decoding response from tracker
-        self.tracker_response = tparser.bdecodes(self.r.text.encode('latin-1'))
+        self.tracker_response = tparser.bdecode(self.r.text.encode('latin-1'))
         self.get_peer_ips()
 
     # TODO - create peer objects with ref to reactor

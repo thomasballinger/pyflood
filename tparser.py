@@ -50,7 +50,7 @@ def bencode(canonical):
     return encode_item(in_dict)
 
 
-def bdecodes(bstring):
+def bdecode(bstring):
     '''
         Bdecodes a bencoded string
         e.g., d3:cow3:moo4:spam4:eggse -> {'cow': 'moo', 'spam': 'eggs'}
@@ -119,9 +119,9 @@ def bdecodes(bstring):
     return dict_repr
 
 
-def bdecode(filename):
+def bdecode_file(filename):
     '''
         Bdecodes a .torrent or other bencoded file
     '''
     with open(filename) as f:
-        return bdecodes(f.read())
+        return bdecode(f.read())
