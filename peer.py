@@ -1,11 +1,10 @@
 from bitarray import bitarray
 import struct
-import pudb
 import random
 import hashlib
 
 
-class peer(object):
+class Peer(object):
     # Can't initialize without a dictionary. Handshake
     # takes place using socket before peer init
     def __init__(self, sock, reactor, torrent, data):

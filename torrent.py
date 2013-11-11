@@ -157,7 +157,7 @@ class torrent(object):
         listen list
         '''
 
-        tpeer = peer.peer(sock, self.reactor, self, data)
+        tpeer = peer.Peer(sock, self.reactor, self, data)
         self.peer_dict[sock] = tpeer
         self.reactor.select_list.append(tpeer)
         # Reactor now listening to tpeer object
