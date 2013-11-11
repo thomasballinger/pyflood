@@ -49,10 +49,8 @@ class Reactor(object):
                 else:
                     s.read()
 
-            wclos = s.write
-            self.subscribed['write'].append(wclos)
-            cclos = s.cleanup
-            self.subscribed['cleanup'].append(cclos)
+            self.subscribed['write'].append(s.write)
+            self.subscribed['cleanup'].append(s.cleanup)
 
             self.trigger('logic')
             self.trigger('write')
